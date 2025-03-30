@@ -13,20 +13,51 @@ exports.getTaskById = async (id) => {
 };
 
 exports.createTask = async (taskData) => {
-    const newTask = new Task(taskData);
-    return await newTask.save();
+    try {
+        const newTask = new Task({
+            title: taskData.title,
+            description: taskData.description || "", 
+            status: taskData.status || "To Do",
+            createdAt: taskData.createdAt ? new Date(taskData.createdAt) : Date.now()
+        });
+
+        return await newTask.save();
+    } catch (err) {
+        throw new Error(err);
+    }
 };
 
 exports.updateTask = async (id, taskData) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new Error("Invalid Task ID");
     }
-    return await Task.findByIdAndUpdate(id, taskData, { new: true, runValidators: true });
+
+    const updateData = { ...taskData };
+    delete updateData.createdAt;
+
+    const updatedTask = await Task.findByIdAndUpdate(id, updateData, { 
+        new: true, 
+        runValidators: true 
+    });
+
+    if (!updatedTask) {
+        throw new Error("Task not found");
+    }
+
+    return updatedTask;
 };
 
 exports.deleteTask = async (id) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new Error("Invalid Task ID");
     }
-    return await Task.findByIdAndDelete(id);
+
+    const deletedTask = await Task.findByIdAndDelete(id);
+    if (!deletedTask) {
+        throw new Error("Task not found");
+    }
+
+    return deletedTask;
 };
+
+
