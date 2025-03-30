@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 connectDB();
 
+app.use('/swagger.yml', express.static(require('path').join(__dirname, 'swagger.yml')));
+
 app.use('/tasks', taskRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

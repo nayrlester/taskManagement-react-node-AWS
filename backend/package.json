@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@vendia/serverless-express": "^4.12.6",
     "aws-sdk": "^2.1692.0",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
@@ -19,7 +20,8 @@
   },
   "scripts": {
     "dev": "nodemon index.js",
-    "serverless": "sls offline"
+    "local": "sls offline",
+    "production": "sls deploy"
   },
   "name": "backend",
   "version": "1.0.0",

@@ -16,7 +16,16 @@ functions:
       - http:
           path: /
           method: GET
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
       - http:
           path: tasks
           method: GET
@@ -45,7 +54,7 @@ functions:
           path: swagger.yml
           method: GET
           cors: true
-          
+
 custom:
   serverless-offline:
     httpPort: 5000
@@ -58,7 +67,4 @@ package:
   patterns:
     - 'swagger.yml'
     - '!node_modules/**'
-    - 'node_modules/express/**'
-    - 'node_modules/body-parser/**'
-    - 'node_modules/cors/**'
-    - 'node_modules/mongoose/**'
+    - 'node_modules/**'
