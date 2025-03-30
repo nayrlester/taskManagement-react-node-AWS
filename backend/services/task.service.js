@@ -1,33 +1,18 @@
-const Tasks = require('../models/Tasks');
+const Task = require('../models/Tasks');
+const mongoose = require('mongoose');
 
 exports.getAllTasks = async () => {
-    try {
-        const tasks = await Tasks.find();
-        if (!tasks || tasks.length === 0) {
-            throw new Error("No tasks found");
-        }
-        return tasks;
-    } catch (err) {
-        console.error("Error fetching tasks:", err);
-        throw new Error(err.message);
-    }
+    return await Task.find();
 };
 
 exports.getTaskById = async (id) => {
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new Error("Invalid Task ID");
     }
-    
-    try {
-        const task = await Tasks.findById(id);
-        console.log("Tasks Found in DB:", task);
+    return await Task.findById(id);
+};
 
-        if (!task) {
-            throw new Error("Task not found");
-        }
-        return task;
-    } catch (err) {
-        console.error("Error fetching task by ID:", err);
-        throw new Error(err.message);
-    }
+exports.createTask = async (taskData) => {
+    const newTask = new Task(taskData);
+    return await newTask.save();
 };

@@ -5,8 +5,7 @@ exports.getAllTasks = async (req, res) => {
         const tasks = await taskService.getAllTasks();
         res.status(200).json(tasks);
     } catch (err) {
-        console.error("Error fetching tasks:", err);
-        res.status(404).json({ error: err.message });
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -16,7 +15,15 @@ exports.getTaskById = async (req, res) => {
         const task = await taskService.getTaskById(id);
         res.status(200).json(task);
     } catch (err) {
-        console.error("Error fetching task:", err);
-        res.status(404).json({ error: err.message });
+        res.status(500).json({ error: err.message });
+    }
+};
+
+exports.createTask = async (req, res) => {
+    try {
+        const task = await taskService.createTask(req.body);
+        res.status(200).json(task);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 };
