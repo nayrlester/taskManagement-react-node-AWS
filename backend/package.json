@@ -16,10 +16,6 @@
     "nodemon": "^3.1.9"
   },
   "scripts": {
-    "offline": "sls offline start",
-    "dynamodb:start": "sls dynamodb start",
-    "dynamodb:migrate": "sls dynamodb migrate",
-    "dynamodb:seed": "sls dynamodb seed",
     "dev": "nodemon index.js"
   },
   "name": "backend",
