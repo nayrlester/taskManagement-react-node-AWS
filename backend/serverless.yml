@@ -51,3 +51,11 @@ custom:
 plugins:
   - serverless-plugin-include-dependencies
   - serverless-offline
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - 'node_modules/express/**'
+    - 'node_modules/cors/**'
+    - 'node_modules/body-parser/**'
+    - 'node_modules/mongoose/**'
