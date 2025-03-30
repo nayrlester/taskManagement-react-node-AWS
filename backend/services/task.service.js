@@ -1,14 +1,33 @@
-const dynamoDb = require('../config/dynamoDb.js');
-const TABLE_NAME = 'tasks';
+const Tasks = require('../models/Tasks');
 
 exports.getAllTasks = async () => {
-    const params = { TableName: TABLE_NAME };
-    const data = await dynamoDb.scan(params).promise();
-    return data.Items;
+    try {
+        const tasks = await Tasks.find();
+        if (!tasks || tasks.length === 0) {
+            throw new Error("No tasks found");
+        }
+        return tasks;
+    } catch (err) {
+        console.error("Error fetching tasks:", err);
+        throw new Error(err.message);
+    }
 };
 
 exports.getTaskById = async (id) => {
-    const params = { TableName: TABLE_NAME, Key: { id } };
-    const data = await dynamoDb.get(params).promise();
-    return data.Item;
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid Task ID");
+    }
+    
+    try {
+        const task = await Tasks.findById(id);
+        console.log("Tasks Found in DB:", task);
+
+        if (!task) {
+            throw new Error("Task not found");
+        }
+        return task;
+    } catch (err) {
+        console.error("Error fetching task by ID:", err);
+        throw new Error(err.message);
+    }
 };

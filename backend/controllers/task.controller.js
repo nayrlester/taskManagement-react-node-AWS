@@ -3,25 +3,20 @@ const taskService = require('../services/task.service');
 exports.getAllTasks = async (req, res) => {
     try {
         const tasks = await taskService.getAllTasks();
-        if (tasks.length === 0) {
-            return res.status(404).send({ error: 'Error: No tasks found' });
-        }
-
-        res.status(200).send(tasks);
+        res.status(200).json(tasks);
     } catch (err) {
-        res.status(500).send({ error: err.message });
+        console.error("Error fetching tasks:", err);
+        res.status(404).json({ error: err.message });
     }
 };
 
 exports.getTaskById = async (req, res) => {
     try {
-        const task = await taskService.getTaskById(req.params.id);
-        if (!task){
-            return res.status(404).send({ error: 'Error: Task not found' });
-        }
-
-        res.status(200).send(task);
+        const { id } = req.params;
+        const task = await taskService.getTaskById(id);
+        res.status(200).json(task);
     } catch (err) {
-        res.status(500).send({ error: err.message });
+        console.error("Error fetching task:", err);
+        res.status(404).json({ error: err.message });
     }
-};4
+};

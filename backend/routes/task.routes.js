@@ -1,6 +1,6 @@
 const express = require('express');
-const taskService = require('../controllers/task.controller.js');
 const router = express.Router();
+const taskService = require('../controllers/task.controller.js');
 
 router.get('/', taskService.getAllTasks);
 router.get('/:id', taskService.getTaskById);
