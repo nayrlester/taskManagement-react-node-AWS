@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require("dotenv").config();
 const serverless = require('serverless-http');
 const connectDB = require('./config/mongoDb.js');
 const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
-const swaggerDocument = yaml.load('./swagger.yml');
+const swaggerDocument = yaml.load(require("path").join(__dirname, "swagger.yml"));
 
 const taskRoutes = require('./routes/task.routes');
 
@@ -16,7 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 connectDB();
 
-const stage = process.env.STAGE || 'dev';
 app.use('/tasks', taskRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
