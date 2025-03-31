@@ -61,16 +61,19 @@ export default function TaskPage() {
         <div>
             <div className="task-form">
                 <input
+                    name='title'
                     placeholder="Title"
                     value={newTask.title}
                     onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                 />
                 <input
+                    name='description'
                     placeholder="Description"
                     value={newTask.description}
                     onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
                 />
                 <select
+                    name='status'
                     value={newTask.status}
                     onChange={(e) => setNewTask({ ...newTask, status: e.target.value })}
                 >
@@ -102,17 +105,20 @@ export default function TaskPage() {
 
             {editingTask && (
                 <div className="modal">
-                    <div className="modal-content">
+                    <div className="modal-content edit-form">
                         <h3>Edit Task</h3>
                         <input
+                            name='title'
                             value={editingTask.title}
                             onChange={(e) => setEditingTask({ ...editingTask, title: e.target.value })}
                         />
                         <input
+                            name='description'
                             value={editingTask.description}
                             onChange={(e) => setEditingTask({ ...editingTask, description: e.target.value })}
                         />
                         <select
+                            name='status'
                             value={editingTask.status}
                             onChange={(e) => setEditingTask({ ...editingTask, status: e.target.value })}
                         >
